@@ -6,67 +6,363 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Third Eye Geoscience & Subsurface Consulting provides geotechnical and groundwater site investigations, subsurface data interpretation and clear, practical reporting for infrastructure, mining and land development projects." />
   <style>
-    body { font-family: system-ui, sans-serif; background:#f5f4f1; color:#1f2933; margin:0; }
-    .page { max-width:1100px; margin:0 auto; padding:2rem; }
-    h2 { margin-top:2rem; }
-    .grid { display:grid; gap:1.5rem; grid-template-columns:repeat(2,1fr); }
-    .card { background:#fff; padding:1.5rem; border-radius:10px; }
+    :root {
+      --bg: #f5f4f1;
+      --card-bg: #ffffff;
+      --text: #1f2933;
+      --muted: #6b7280;
+      --accent: #1f7ed0;
+      --accent-dark: #155a96;
+      --border: #e0ded8;
+      --earth-1: #c48a4a;
+      --earth-2: #f0d9b6;
+      --water: #2a6fba;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .page { max-width: 1100px; margin: 0 auto; padding: 1.5rem 1.5rem 3rem; }
+
+    header {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1.5rem; padding: 1rem 0 2rem; border-bottom: 1px solid var(--border);
+    }
+    .brand { display: flex; align-items: center; gap: 1rem; }
+    .brand-logo {
+      width: 70px; height: 70px; border-radius: 999px; background: #fff;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; border: 1px solid var(--border);
+    }
+    .brand-logo img { width: 100%; height: 100%; object-fit: contain; }
+    .brand-text h1 { font-size: 1.4rem; letter-spacing: 0.06em; text-transform: uppercase; }
+    .brand-text p { font-size: 0.9rem; color: var(--muted); }
+
+    nav { display: flex; gap: 1rem; font-size: 0.9rem; }
+    nav a { padding: 0.4rem 0.6rem; border-radius: 999px; }
+    nav a:hover { background: rgba(31, 126, 208, 0.08); text-decoration: none; }
+
+    .hero {
+      display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+      gap: 2rem; padding: 2.5rem 0 2rem;
+    }
+    .hero h2 { font-size: 2rem; margin-bottom: 0.75rem; }
+    .hero-tagline { font-size: 1.05rem; color: var(--muted); margin-bottom: 1.5rem; }
+    .hero strong { color: var(--accent-dark); }
+
+    .hero-cta { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1.5rem; }
+    .btn-primary, .btn-secondary {
+      padding: 0.7rem 1.1rem; border-radius: 999px; border: none;
+      cursor: pointer; font-size: 0.95rem; font-weight: 500;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent-dark); }
+    .btn-secondary { background: transparent; color: var(--accent); border: 1px solid rgba(31, 126, 208, 0.4); }
+
+    .hero-meta { font-size: 0.85rem; color: var(--muted); }
+
+    .hero-visual {
+      background: linear-gradient(to top, var(--water), var(--earth-1));
+      border-radius: 1.2rem; padding: 1.3rem;
+      box-shadow: 0 14px 35px rgba(15, 23, 42, 0.18);
+      color: #ffffff; display: grid; place-content: center;
+      position: relative; overflow: hidden;
+    }
+    .hero-visual h3 {
+      font-size: 1rem; text-transform: uppercase;
+      letter-spacing: 0.12em; margin-bottom: 0.5rem; opacity: 0.9;
+    }
+    .hero-visual p { font-size: 0.9rem; max-width: 260px; }
+    .hero-visual::after {
+      content: ""; position: absolute; inset: 40% -40%;
+      background: radial-gradient(circle at 50% 0, rgba(255, 255, 255, 0.25), transparent 60%);
+      opacity: 0.9;
+    }
+    .hero-visual-inner { position: relative; z-index: 1; }
+
+    section { padding: 2.5rem 0 0; }
+    section h2 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+    section > p.section-intro {
+      color: var(--muted); font-size: 0.95rem;
+      max-width: 650px; margin-bottom: 1.5rem;
+    }
+
+    .grid { display: grid; gap: 1.5rem; }
+    @media (min-width: 800px) {
+      .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+
+    .card {
+      background: var(--card-bg); border-radius: 1rem;
+      padding: 1.25rem 1.3rem; border: 1px solid var(--border);
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.04);
+    }
+    .card h3 { font-size: 1.05rem; margin-bottom: 0.4rem; }
+
+    .chip {
+      display: inline-flex; align-items: center;
+      padding: 0.25rem 0.6rem; border-radius: 999px;
+      background: rgba(31, 126, 208, 0.06);
+      color: var(--accent-dark); font-size: 0.75rem;
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.4rem;
+    }
+
+    .services-list { list-style: none; margin-top: 0.5rem; }
+    .services-list li::before { content: "• "; color: var(--accent); }
+
+    .about-layout { display: grid; gap: 1.5rem; }
+    @media (min-width: 800px) {
+      .about-layout { grid-template-columns: 2.2fr 1.3fr; }
+    }
+
+    .about-highlight {
+      border-left: 3px solid var(--accent);
+      padding-left: 0.9rem; font-size: 0.9rem; color: var(--muted);
+    }
+
+    .contact-card {
+      display: flex; flex-wrap: wrap; justify-content: space-between;
+      gap: 1.2rem; align-items: center;
+    }
+
+    footer {
+      margin-top: 2.5rem; padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.8rem; color: var(--muted); text-align: center;
+    }
+
+    @media (max-width: 799px) {
+      header { flex-direction: column; align-items: flex-start; }
+      nav { flex-wrap: wrap; padding-bottom: 0.5rem; }
+      .hero { grid-template-columns: minmax(0, 1fr); }
+      .hero-visual { order: -1; }
+    }
   </style>
 </head>
 <body>
-<div class="page">
+  <div class="page">
+    <header>
+      <div class="brand">
+        <div class="brand-logo">
+          <img src="logo.png" alt="Third Eye Geoscience & Subsurface Consulting logo">
+        </div>
+        <div class="brand-text">
+          <h1>Third Eye Geoscience</h1>
+          <p>Subsurface & groundwater insight for better decisions.</p>
+        </div>
+      </div>
+      <nav>
+        <a href="#services">Services</a>
+        <a href="#experience">Experience</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
 
-<h2>Representative Experience of the Principal Consultant</h2>
+    <main>
+      <section class="hero" id="top">
+        <div>
+          <h2>Seeing beneath the surface, so your projects don’t hit surprises.</h2>
+          <p class="hero-tagline">
+            Third Eye Geoscience &amp; Subsurface Consulting provides
+            <strong>geotechnical and groundwater investigations</strong>,
+            subsurface data interpretation and clear reporting for
+            infrastructure, mining and land development across Australia.
+          </p>
+          <div class="hero-cta">
+            <a href="#contact" class="btn-primary">Enquire about a project</a>
+            <a href="#experience" class="btn-secondary">View experience</a>
+          </div>
+          <p class="hero-meta">
+            Geotechnical &amp; hydrogeological investigations • Groundwater
+            modelling &amp; interpretation • Subsurface risk assessment
+          </p>
+        </div>
 
-<div class="grid">
-  <div class="card">
-    <h3>Major Transport Infrastructure – Victoria</h3>
-    <p>
-      Geotechnical site investigations and groundwater assessments for freeway
-      and rail upgrades including drilling supervision, groundwater monitoring
-      installation, seepage assessment, construction and design support.
-    </p>
+        <aside class="hero-visual" aria-hidden="true">
+          <div class="hero-visual-inner">
+            <h3>Subsurface snapshot</h3>
+            <p>
+              Boreholes, groundwater levels, geophysics and lab data brought
+              together into one clear conceptual model that engineers and
+              decision-makers can actually use.
+            </p>
+          </div>
+        </aside>
+      </section>
+
+      <section id="services">
+        <h2>Services</h2>
+        <p class="section-intro">
+          Practical, investigation-led subsurface advice. From fieldwork to
+          reporting, Third Eye Geoscience provides continuity between data
+          collection, analysis and design.
+        </p>
+
+        <div class="grid grid-3">
+          <article class="card">
+            <span class="chip">Geotechnical</span>
+            <h3>Geotechnical site investigations</h3>
+            <ul class="services-list">
+              <li>Borehole and test pit logging &amp; supervision</li>
+              <li>Core logging and sampling programs</li>
+              <li>In-situ testing (CPTu, DCP, plate load, etc.)</li>
+              <li>Laboratory scheduling and data review</li>
+              <li>Factual &amp; interpretative site investigation reports</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <span class="chip">Groundwater</span>
+            <h3>Groundwater investigations &amp; monitoring</h3>
+            <ul class="services-list">
+              <li>Piezometer and monitoring bore installation supervision</li>
+              <li>Pumping tests &amp; slug tests (analysis &amp; interpretation)</li>
+              <li>Groundwater level &amp; quality monitoring programs</li>
+              <li>Conceptual groundwater models for design &amp; approvals</li>
+              <li>Seepage &amp; inflow assessment for pits, tunnels &amp; cuttings</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <span class="chip">Data &amp; Reporting</span>
+            <h3>Subsurface data interpretation &amp; reporting</h3>
+            <ul class="services-list">
+              <li>Integration of geological, geophysical &amp; lab data</li>
+              <li>3D geological and hydrogeological conceptualisation</li>
+              <li>Analytical &amp; numerical modelling support</li>
+              <li>Risk assessments for foundations &amp; groundwater impacts</li>
+              <li>Clear, decision-ready technical reports &amp; figures</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="experience">
+        <h2>Representative Experience of the Principal Consultant</h2>
+        <p class="section-intro">
+          The following examples represent the prior professional experience of
+          the Principal Consultant while employed with previous organisations.
+          These works were not delivered by Third Eye Geoscience &amp; Subsurface
+          Consulting and are provided to demonstrate technical capability.
+        </p>
+
+        <div class="grid grid-2">
+          <article class="card">
+            <h3>Major Transport Infrastructure – Victoria</h3>
+            <p>
+              Geotechnical site investigations and groundwater assessments for freeway
+              and rail upgrades including drilling supervision, groundwater monitoring
+              installation, seepage assessment, construction and design support.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Dewatering and Risk Assessment – Mining, Residential &amp; Commercial Development</h3>
+            <p>
+              Hydrogeological assessment to support open pit dewatering schemes assisting
+              mine planning decisions. Environmental and hydrogeological assessment to
+              support evaluation of groundwater dewatering at proposed construction sites.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Contaminated Land &amp; Groundwater Modelling</h3>
+            <p>
+              Application of analytical transport solutions and groundwater flow assessment
+              to understand contaminant plume behaviour and monitoring requirements.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Water Resource &amp; Environmental Projects</h3>
+            <p>
+              Hydrogeological impact assessment studies and modelling supporting water
+              resource management, dam and spring protection under Australian environmental
+              regulatory frameworks.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="about">
+        <h2>About Third Eye Geoscience</h2>
+        <div class="about-layout">
+          <div>
+            <p class="section-intro">
+              Third Eye Geoscience &amp; Subsurface Consulting is led by Uthman who holds a
+              Bachelor of Science (Hons) degree in Geophysics, Diploma in Laboratory
+              Techniques, a Masters in Petroleum Geoscience and a Postgraduate Certificate
+              in Groundwater Hydrology.
+            </p>
+            <p>
+              His experience cuts across technical involvement in the Niger Delta and UK
+              North Sea upstream oil and gas sector, and Australian infrastructure, mining
+              and environmental projects. He is a member of the Australian Institute of
+              Geoscientists.
+            </p>
+            <p>
+              The practice focuses on integrating geological, geotechnical and
+              hydrogeological data into clear, decision-ready advice that supports
+              engineering design, regulatory approval and risk management.
+            </p>
+          </div>
+
+          <aside class="about-highlight">
+            <p>
+              <strong>Core strengths:</strong><br>
+              • Translating complex subsurface behaviour into clear reporting<br>
+              • Integrating geological, geotechnical &amp; hydrogeological data<br>
+              • Working collaboratively with designers, contractors and
+              regulators to de-risk subsurface uncertainty.
+            </p>
+          </aside>
+        </div>
+      </section>
+
+      <section id="contact">
+        <h2>Contact</h2>
+        <div class="card contact-card">
+          <div class="contact-details">
+            <p>
+              Ready to discuss a project, scope a site investigation or review
+              existing subsurface data?
+            </p>
+            <p>
+              Email:
+              <a href="mailto:info@thirdeyegeo.com.au">
+                info@thirdeyegeo.com.au
+              </a><br>
+              Location: Based in Australia – available for projects nationwide.
+            </p>
+          </div>
+          <div>
+            <a href="mailto:info@thirdeyegeo.com.au" class="btn-primary">
+              Send an enquiry
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      &copy; <span id="year"></span> Third Eye Geoscience &amp; Subsurface
+      Consulting. All rights reserved.
+    </footer>
   </div>
 
-  <div class="card">
-    <h3>Dewatering and Risk Assessment – Mining, Residential & Commercial Development</h3>
-    <p>
-      Hydrogeological assessment to support open pit dewatering schemes assisting
-      mine planning decisions. Environmental and hydrogeological assessment to
-      support evaluation of groundwater dewatering at proposed construction sites.
-    </p>
-  </div>
-
-  <div class="card">
-    <h3>Contaminated Land & Groundwater Modelling</h3>
-    <p>
-      Application of analytical transport solutions and groundwater flow assessment
-      to understand contaminant plume behaviour and monitoring requirements.
-    </p>
-  </div>
-
-  <div class="card">
-    <h3>Water Resource & Environmental Projects</h3>
-    <p>
-      Hydrogeological impact assessment studies and modelling supporting water
-      resource management, dam and spring protection under Australian environmental
-      regulatory frameworks.
-    </p>
-  </div>
-</div>
-
-<h2>About Third Eye Geoscience</h2>
-<p>
-  Third Eye Geoscience & Subsurface Consulting is led by Uthman who holds a Bachelor
-  of Science (Hons) degree in Geophysics, Diploma in Laboratory Techniques, a
-  Masters in Petroleum Geoscience and a Postgraduate Certificate in Groundwater Hydrology.
-  His experience cuts across technical involvement in the Niger Delta and UK North Sea
-  upstream oil and gas sector, and Australian infrastructure, mining and environmental
-  projects. He is a member of the Australian Institute of Geoscientists. The practice
-  focuses on integrating geological, geotechnical and hydrogeological data into clear,
-  decision-ready advice.
-</p>
-
-</div>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
